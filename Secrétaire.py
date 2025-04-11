@@ -937,8 +937,8 @@ async def reset(interaction: discord.Interaction):
 
 # Charger les questions depuis un fichier JSON
 def load_questions():
-    with open('C:/Users/leust/Desktop/Question.json', 'r', encoding='utf-8') as f:
-        return json.load(f)
+    with open('Question.json', 'r', encoding='utf-8') as f:
+        questions = json.load(f)
 
 questions = load_questions()
 
