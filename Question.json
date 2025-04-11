@@ -1,0 +1,208 @@
+[
+    {
+        "question": "Qui a peint la Joconde ?",
+        "options": ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Léonard de Vinci"],
+        "correct_answer": "Léonard de Vinci"
+    },
+    {
+        "question": "Quel est le plus grand continent du monde ?",
+        "options": ["Asie", "Afrique", "Europe", "Amérique"],
+        "correct_answer": "Asie"
+    },
+    {
+        "question": "Quel est le plus long fleuve du monde ?",
+        "options": ["Nil", "Amazonie", "Mississippi", "Yangzi Jiang"],
+        "correct_answer": "Nil"
+    },
+    {
+        "question": "Quel est l'élément chimique dont le symbole est O ?",
+        "options": ["Oxygène", "Or", "Ozone", "Osmium"],
+        "correct_answer": "Oxygène"
+    },
+    {
+        "question": "En quelle année l'homme a-t-il marché sur la Lune pour la première fois ?",
+        "options": ["1969", "1972", "1959", "1980"],
+        "correct_answer": "1969"
+    },
+    {
+        "question": "Quel est le plus grand océan de la planète ?",
+        "options": ["Atlantique", "Indien", "Arctique", "Pacifique"],
+        "correct_answer": "Pacifique"
+    },
+    {
+        "question": "Qui est le créateur de Facebook ?",
+        "options": ["Bill Gates", "Steve Jobs", "Mark Zuckerberg", "Larry Page"],
+        "correct_answer": "Mark Zuckerberg"
+    },
+    {
+        "question": "Quel pays est surnommé le pays du Soleil Levant ?",
+        "options": ["Chine", "Corée du Sud", "Japon", "Thaïlande"],
+        "correct_answer": "Japon"
+    },
+    {
+        "question": "Quelle est la capitale de la France ?",
+        "options": ["Berlin", "Paris", "Madrid", "Rome"],
+        "correct_answer": "Paris"
+    },
+    {
+        "question": "Quel est l'instrument de musique emblématique de l'Irlande ?",
+        "options": ["Guitare", "Piano", "Harpe", "Flûte"],
+        "correct_answer": "Harpe"
+    },
+    {
+        "question": "Combien de couleurs y a-t-il dans un arc-en-ciel ?",
+        "options": ["5", "6", "7", "8"],
+        "correct_answer": "7"
+    },
+    {
+        "question": "Qui a écrit 'Le Petit Prince' ?",
+        "options": ["Albert Camus", "Antoine de Saint-Exupéry", "Marcel Proust", "Émile Zola"],
+        "correct_answer": "Antoine de Saint-Exupéry"
+    },
+    {
+        "question": "Quel animal est le symbole de la France ?",
+        "options": ["Aigle", "Lion", "Cocorico", "Cygne"],
+        "correct_answer": "Cocorico"
+    },
+    {
+        "question": "Quel est le plus grand désert du monde ?",
+        "options": ["Sahara", "Gobi", "Karakum", "Antarctique"],
+        "correct_answer": "Antarctique"
+    },
+    {
+        "question": "Dans quelle ville se trouve la Tour Eiffel ?",
+        "options": ["Lyon", "Marseille", "Paris", "Bordeaux"],
+        "correct_answer": "Paris"
+    },
+    {
+        "question": "Qui a écrit 'Les Misérables' ?",
+        "options": ["Gustave Flaubert", "Émile Zola", "Victor Hugo", "Honoré de Balzac"],
+        "correct_answer": "Victor Hugo"
+    },
+    {
+        "question": "En quelle année a eu lieu la Révolution Française ?",
+        "options": ["1776", "1789", "1804", "1815"],
+        "correct_answer": "1789"
+    },
+    {
+        "question": "Qui a découvert la pénicilline ?",
+        "options": ["Marie Curie", "Louis Pasteur", "Alexander Fleming", "Albert Einstein"],
+        "correct_answer": "Alexander Fleming"
+    },
+    {
+        "question": "Quelle est la capitale de l'Italie ?",
+        "options": ["Madrid", "Paris", "Rome", "Berlin"],
+        "correct_answer": "Rome"
+    },
+    {
+        "question": "Combien de continents y a-t-il sur Terre ?",
+        "options": ["5", "6", "7", "8"],
+        "correct_answer": "7"
+    },
+    {
+        "question": "Quel est le plus petit pays du monde ?",
+        "options": ["Monaco", "Nauru", "Saint-Marin", "Vatican"],
+        "correct_answer": "Vatican"
+    },
+    {
+        "question": "Quel est le plus grand désert du monde ?",
+        "options": ["Sahara", "Gobi", "Antarctique", "Kalahari"],
+        "correct_answer": "Antarctique"
+    },
+    {
+        "question": "Quelle est la capitale de l'Italie ?",
+        "options": ["Milan", "Rome", "Venise", "Florence"],
+        "correct_answer": "Rome"
+    },
+    {
+        "question": "Quel est l'élément chimique dont le symbole est O ?",
+        "options": ["Or", "Oxygène", "Ozone", "Osmium"],
+        "correct_answer": "Oxygène"
+    },
+    {
+        "question": "En quelle année l'homme a-t-il marché sur la Lune pour la première fois ?",
+        "options": ["1969", "1959", "1979", "1989"],
+        "correct_answer": "1969"
+    },
+    {
+        "question": "Qui a écrit 'Le Petit Prince' ?",
+        "options": ["Albert Camus", "Antoine de Saint-Exupéry", "Victor Hugo", "Marcel Proust"],
+        "correct_answer": "Antoine de Saint-Exupéry"
+    },
+    {
+        "question": "Quel est l'animal national du Canada ?",
+        "options": ["Loup", "Castor", "Aigle", "Orignal"],
+        "correct_answer": "Castor"
+    },
+    {
+        "question": "Quel est le plus grand mammifère terrestre ?",
+        "options": ["Éléphant d'Afrique", "Baleine bleue", "Girafe", "Rhino blanc"],
+        "correct_answer": "Éléphant d'Afrique"
+    },
+    {
+        "question": "Quelle ville est connue sous le nom de 'Ville Lumière' ?",
+        "options": ["Rome", "Berlin", "Paris", "New York"],
+        "correct_answer": "Paris"
+    },
+    {
+        "question": "Quel est l'instrument de musique à vent qui fait partie de la famille des bois ?",
+        "options": ["Clarinette", "Trompette", "Guitare", "Piano"],
+        "correct_answer": "Clarinette"
+    },
+    {
+        "question": "Qui a peint le plafond de la Chapelle Sixtine ?",
+        "options": ["Claude Monet", "Michel-Ange", "Pablo Picasso", "Vincent van Gogh"],
+        "correct_answer": "Michel-Ange"
+    },
+    {
+        "question": "Quelle est la monnaie officielle du Japon ?",
+        "options": ["Yuan", "Won", "Yen", "Ringgit"],
+        "correct_answer": "Yen"
+    },
+    {
+        "question": "Qui est le dieu principal du panthéon grec ?",
+        "options": ["Zeus", "Hadès", "Poséidon", "Hermès"],
+        "correct_answer": "Zeus"
+    },
+    {
+        "question": "Quel est l'organe principal du système circulatoire humain ?",
+        "options": ["Poumons", "Cerveau", "Cœur", "Estomac"],
+        "correct_answer": "Cœur"
+    },
+    {
+        "question": "En quelle année la révolution française a-t-elle commencé ?",
+        "options": ["1789", "1790", "1792", "1776"],
+        "correct_answer": "1789"
+    },
+    {
+        "question": "Quel est le nom de la déesse romaine de l'amour ?",
+        "options": ["Juno", "Minerva", "Vénus", "Cérès"],
+        "correct_answer": "Vénus"
+    },
+    {
+        "question": "Quelle est la distance moyenne entre la Terre et le Soleil ?",
+        "options": ["150 millions de kilomètres", "100 millions de kilomètres", "200 millions de kilomètres", "250 millions de kilomètres"],
+        "correct_answer": "150 millions de kilomètres"
+    },
+    {
+        "question": "Quelle est la capitale du Canada ?",
+        "options": ["Ottawa", "Montréal", "Toronto", "Vancouver"],
+        "correct_answer": "Ottawa"
+    },
+    {
+        "question": "Qui a inventé le premier avion à moteur ?",
+        "options": ["Charles Lindbergh", "Les frères Wright", "Louis Blériot", "Amelia Earhart"],
+        "correct_answer": "Les frères Wright"
+    },
+    {
+        "question": "Quel est l'élément chimique dont le symbole est Fe ?",
+        "options": ["Fer", "Fluor", "Fermium", "Francium"],
+        "correct_answer": "Fer"
+    },
+    {
+        "question": "Quel pays a remporté la coupe du monde de football 1998 ?",
+        "options": ["Brésil", "Allemagne", "France", "Argentine"],
+        "correct_answer": "France"
+    }
+]
+
