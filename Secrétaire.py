@@ -11,6 +11,9 @@ import random
 from discord.ui import Button, View
 import time 
 import json
+from flask import Flask
+
+
 # Ton token Discord
 TOKEN = os.getenv('BOT_TOKEN')
 
