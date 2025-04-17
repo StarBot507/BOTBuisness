@@ -14,6 +14,20 @@ import json
 # Ton token Discord
 TOKEN = os.getenv('BOT_TOKEN')
 
+# === Mini serveur Flask juste pour Render ===
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Le bot est en ligne !"
+
+def run():
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
 
 # Config du bot
 intents = discord.Intents.all()
@@ -999,7 +1013,8 @@ async def question(interaction: discord.Interaction):
 
 
 
-
+# Lancer le serveur Flask
+keep_alive()
 
 @bot.event
 async def on_ready():
