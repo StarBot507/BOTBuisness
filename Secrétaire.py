@@ -11,13 +11,15 @@ import random
 from discord.ui import Button, View
 import time 
 import json
-from flask import Flask
-from threading import Thread
-
-
-
 # Ton token Discord
 TOKEN = os.getenv('BOT_TOKEN')
+
+
+
+
+
+from threading import Thread
+from flask import Flask
 
 # === Mini serveur Flask juste pour Render ===
 app = Flask('')
@@ -34,6 +36,13 @@ def keep_alive():
     t.start()
 
 
+
+
+
+
+
+
+
 # Config du bot
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -41,7 +50,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 tree = bot.tree
 # Connexion à la base de données SQLite (création du fichier si nécessaire)
-DATABASE = "data.db"
+DATABASE = "Metier.db"
 
 # Connexion à la base de données
 def get_db():
@@ -308,6 +317,21 @@ async def travailler(interaction: discord.Interaction):
 
     # === MINI-JEU DU DÉVELOPPEUR ===
     if metier == "developer":
+
+        # Récupérer le temps d'attente spécifique au métier
+        temps_attente = metiers[metier]["temps_par_tache"]
+
+        # Vérification du cooldown pour le designer
+        if dernier_travail and isinstance(dernier_travail, (float, int)):
+            delta = maintenant - dernier_travail  # Calcul du temps écoulé depuis le dernier travail
+            if delta < temps_attente:
+                temps_restant = int(temps_attente - delta)  # Temps restant avant de pouvoir retravailler
+                await interaction.response.send_message(
+                    f"⏳ Tu dois attendre encore {temps_restant} secondes avant de retravailler.",
+                    ephemeral=True
+                )
+                return  # Retour si le joueur ne peut pas retravailler encore
+
         nombre_secret = random.randint(1, 100)
         essais_max = 7
 
@@ -382,6 +406,21 @@ async def travailler(interaction: discord.Interaction):
 
     # Jeu pour le métier Chercheur
     elif metier == "Chercheur":
+
+        # Récupérer le temps d'attente spécifique au métier
+        temps_attente = metiers[metier]["temps_par_tache"]
+
+        # Vérification du cooldown pour le designer
+        if dernier_travail and isinstance(dernier_travail, (float, int)):
+            delta = maintenant - dernier_travail  # Calcul du temps écoulé depuis le dernier travail
+            if delta < temps_attente:
+                temps_restant = int(temps_attente - delta)  # Temps restant avant de pouvoir retravailler
+                await interaction.response.send_message(
+                    f"⏳ Tu dois attendre encore {temps_restant} secondes avant de retravailler.",
+                    ephemeral=True
+                )
+                return  # Retour si le joueur ne peut pas retravailler encore
+
         async def gagner():
             nonlocal argent
             argent += metiers[metier]["gain"]
@@ -404,6 +443,21 @@ async def travailler(interaction: discord.Interaction):
 
     # 💼 Investisseur
     if metier == "Investisseur":
+
+        # Récupérer le temps d'attente spécifique au métier
+        temps_attente = metiers[metier]["temps_par_tache"]
+
+        # Vérification du cooldown pour le designer
+        if dernier_travail and isinstance(dernier_travail, (float, int)):
+            delta = maintenant - dernier_travail  # Calcul du temps écoulé depuis le dernier travail
+            if delta < temps_attente:
+                temps_restant = int(temps_attente - delta)  # Temps restant avant de pouvoir retravailler
+                await interaction.response.send_message(
+                    f"⏳ Tu dois attendre encore {temps_restant} secondes avant de retravailler.",
+                    ephemeral=True
+                )
+                return  # Retour si le joueur ne peut pas retravailler encore
+
         async def gagner(gain):
             nonlocal argent
             argent += gain
@@ -955,20 +1009,61 @@ async def reset(interaction: discord.Interaction):
 
 
 # Charger les questions depuis un fichier JSON
-def load_questions():
-    with open('Question.json', 'r', encoding='utf-8') as f:
-        questions = json.load(f)
+def charger_questions():
+    # Chemin absolu et relatif
+    chemin_absolu = 'C:/Users/Suel/OneDrive/Documents/Anatole/Cartable/Bot_buisness/Question.json'
+    chemin_relatif = 'Question.json'
 
-questions = load_questions()
+    questions = None
+
+    # Test du chemin absolu
+    if os.path.exists(chemin_absolu):
+        try:
+            with open(chemin_absolu, 'r', encoding='utf-8') as f:
+                questions = json.load(f)
+            if not questions:
+                print("Le fichier 'Question.json' est vide.")
+                return None
+        except json.JSONDecodeError:
+            print("Erreur : Le fichier 'Question.json' (chemin absolu) n'est pas un fichier JSON valide.")
+            return None
+    else:
+        print(f"Le fichier '{chemin_absolu}' n'a pas été trouvé, tentative avec le chemin relatif...")
+
+    # Test du chemin relatif
+    if questions is None and os.path.exists(chemin_relatif):
+        try:
+            with open(chemin_relatif, 'r', encoding='utf-8') as f:
+                questions = json.load(f)
+            if not questions:
+                print("Le fichier 'Question.json' est vide.")
+                return None
+        except json.JSONDecodeError:
+            print("Erreur : Le fichier 'Question.json' (chemin relatif) n'est pas un fichier JSON valide.")
+            return None
+
+    if questions is None:
+        print("Impossible de charger le fichier 'Question.json'.")
+        return None
+
+    return questions
+
+questions = charger_questions()
 
 # Fonction pour récupérer une question
 def get_question():
-    question_data = random.choice(questions)
-    question = question_data["question"]
-    correct_answer = question_data["correct_answer"]
-    options = question_data["options"]
-    random.shuffle(options)
+    questions = charger_questions()
 
+    if questions is None or len(questions) == 0:
+        print("Aucune question trouvée.")
+        return None, None, None  # Retourne des valeurs par défaut pour éviter l'erreur
+
+    # Choisir une question aléatoire
+    question_data = random.choice(questions)
+    question = question_data.get("question", "Pas de question trouvée")
+    options = question_data.get("options", [])
+    correct_answer = question_data.get("réponse", "Aucune réponse trouvée")
+    
     return question, options, correct_answer
 
 # Définir la commande slash pour poser une question
@@ -1018,7 +1113,6 @@ async def question(interaction: discord.Interaction):
 
 
 
-# Lancer le serveur Flask
 keep_alive()
 
 @bot.event
