@@ -4,6 +4,23 @@ import logging
 import os
 import time
 import asyncio
+from flask import Flask
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is alive!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+
+
 
 
 # Token du bot
@@ -67,6 +84,9 @@ async def sync_module(interaction: discord.Interaction, module: str):
     except discord.errors.HTTPException as e:
         await interaction.response.send_message(f"❌ Erreur lors de la synchronisation : {e}.", ephemeral=True)
 
+
+
+keep_alive()
 # Ajout à l'arbre de commandes
 bot.tree.add_command(sync_module)
 
