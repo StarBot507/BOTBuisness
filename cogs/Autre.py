@@ -271,24 +271,24 @@ class AutreCog(commands.Cog):
         nb_aleatoire = random.randint(1, 100)
         nb_aleatoire2 = random.randint(1, 100)
         if nb_aleatoire == 100:
-            await interaction.response.send_message(f"tirage en cour ...")
+            await interaction.response.send_message(f"tirage en cour ...", ephemeral=True)
             await asyncio.sleep(2)  # Pause de 5 secondes
-            await interaction.followup.send(f"Tu as obtenue un caca l'Epique tu as donc 1 chance sur 100 d'en obtenir un **l'égendaire**")
-            await interaction.followup.send(f"tirage en cour ...")
+            await interaction.followup.send(f"Tu as obtenue un caca l'Epique tu as donc 1 chance sur 100 d'en obtenir un **l'égendaire**", ephemeral=True)
+            await interaction.followup.send(f"tirage en cour ...", ephemeral=True)
             await asyncio.sleep(2)  # Pause de 5 secondes
-            await interaction.followup.send(f"tirage en cour ...")
+            await interaction.followup.send(f"tirage en cour ...", ephemeral=True)
             await asyncio.sleep(1)  # Pause de 5 secondes
             if nb_aleatoire2 == 100:
-              await interaction.followup.send(f"Tu as obtenue un caca **l'Egendaire** tu as donc gagner 50,000 dans ta poche.")
+              await interaction.followup.send(f"Tu as obtenue un caca **l'Egendaire** tu as donc gagner 50,000 dans ta poche.", ephemeral=True)
               await self.caca_gagnant(interaction)
 
             else:
-                await interaction.followup.send(f"Dommage une autre fois peut-être !")  
+                await interaction.followup.send(f"Dommage une autre fois peut-être !", ephemeral=True)  
 
         else:
-            await interaction.response.send_message(f"tirage en cour ...")
+            await interaction.response.send_message(f"tirage en cour ...", ephemeral=True)
             await asyncio.sleep(2)  # Pause de 5 secondes
-            await interaction.followup.send(f'Tu es une grosse merde tu as obtenu un caca **COMMUN**')
+            await interaction.followup.send(f'Tu es une grosse merde tu as obtenu un caca **COMMUN**', ephemeral=True)
 
     async def caca_gagnant(interaction):
         url = f"https://unbelievaboat.com/api/v1/guilds/1161602328714023013/users/{interaction.user.id}"
