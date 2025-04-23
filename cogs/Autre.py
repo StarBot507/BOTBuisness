@@ -5,6 +5,8 @@ import requests
 import json
 import os
 import random
+import time
+import asyncio
 
 class AutreCog(commands.Cog):
     def __init__(self, bot):
