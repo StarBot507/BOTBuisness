@@ -58,6 +58,9 @@ class AutreCog(commands.Cog):
 
     @discord.app_commands.command(name="sim", description="Simule un vol avec probabilité d'échec et gain estimé")
     async def sim_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
+        if not discord.utils.get(interaction.user.roles, name="Conseil d'administration"):
+            await interaction.response.send_message("❌ Cette commande est en phase de test pour une **amélioration** de */simuler_vol*.", ephemeral=True)
+            return
         cible_id = self.extract_id_from_mention(cible_mention)
         initiator_id = self.extract_id_from_mention(initiator_mention)
 
@@ -121,7 +124,7 @@ class AutreCog(commands.Cog):
         embed.add_field(name="", value=f"", inline=False)
         embed.add_field(name="💸 Perte possible", value=f"{perte:,}💰", inline=False)
 
-        await interaction.followup.send(embed=embed, ephemeral=True)
+#        await interaction.followup.send(embed=embed, ephemeral=True)
 
     @discord.app_commands.command(name="simuler_vol", description="Simule un vol avec une probabilité d'échec et un gain estimé")
     async def simulateur_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
@@ -234,7 +237,7 @@ class AutreCog(commands.Cog):
             embed.add_field(name="", value=f"", inline=False)
             embed.add_field(name="💸 Perte possible", value=f"{perte:,}💰", inline=False)  # Perte de 20% de ton cash
 
-            await interaction.followup.send(embed=embed, ephemeral=True)
+#            await interaction.followup.send(embed=embed, ephemeral=True)
         else:
             # Si l'API ne répond pas correctement pour la cible
             await interaction.response.send_message("Erreur : Impossible de récupérer les données de la cible.")        
