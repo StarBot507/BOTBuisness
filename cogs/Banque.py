@@ -276,7 +276,8 @@ class Banque(commands.Cog):
                 frais = self.calcul_frais(excedent)
 
                 payload = {
-                    "bank": -frais
+                    "bank": -frais,
+                    "reason": f"Frais du au montant de la banque superieur a 75 000"
                 }
 
                 r = requests.patch(f"{BASE_URL}/{user_id}", headers=HEADERS, json=payload)
