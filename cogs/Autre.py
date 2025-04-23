@@ -55,7 +55,7 @@ class AutreCog(commands.Cog):
 
 
     @discord.app_commands.command(name="sim", description="Simule un vol avec probabilité d'échec et gain estimé")
-    async def simulateur_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
+    async def sim_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
         cible_id = self.extract_id_from_mention(cible_mention)
         initiator_id = self.extract_id_from_mention(initiator_mention)
 
