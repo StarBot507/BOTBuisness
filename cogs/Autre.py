@@ -58,9 +58,7 @@ class AutreCog(commands.Cog):
 
     @discord.app_commands.command(name="sim", description="Simule un vol avec probabilité d'échec et gain estimé")
     async def sim_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
-        if not discord.utils.get(interaction.user.roles, name="Conseil d'administration"):
-            await interaction.followup.send("❌ Cette commande est en phase de test pour une **amélioration** de */simuler_vol*.", ephemeral=True)
-            return
+
             
         cible_id = self.extract_id_from_mention(cible_mention)
         initiator_id = self.extract_id_from_mention(initiator_mention)
