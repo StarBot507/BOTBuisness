@@ -59,6 +59,14 @@ class AutreCog(commands.Cog):
     @discord.app_commands.command(name="sim", description="Simule un vol avec probabilité d'échec et gain estimé")
     async def sim_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
 
+        ROLE_ID = 1356303140802134217  # ID du rôle requis
+
+        if not any(role.id == ROLE_ID for role in interaction.user.roles):
+        await interaction.response.send_message("❌ Accès refusé : Cette commande est réservée aux membres autorisés.", ephemeral=True)
+        return
+
+    await interaction.response.defer(ephemeral=True)
+
             
         cible_id = self.extract_id_from_mention(cible_mention)
         initiator_id = self.extract_id_from_mention(initiator_mention)
