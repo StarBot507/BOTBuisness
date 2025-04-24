@@ -5,6 +5,9 @@ from discord.ext import commands, tasks
 from discord import app_commands
 import requests
 import re
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+from pytz import timezone
 
 GUILD_ID = 1161602328714023013  # Remplace par l'ID de ton serveur
 UNBELIEVABOAT_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiIxMzU4MDEwNTg0MDA3ODM4NDIzIiwiaWF0IjoxNzQzODQ1MzUzfQ.MVyA4OU4bgetYIB-T1aCajjJgEI2YTrcnV7owX38BlU'
@@ -19,7 +22,15 @@ class Banque(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.init_db()
-        self.appliquer_frais_auto.start()  # Lancer la tâche dès l'init
+        self.scheduler = AsyncIOScheduler()
+        paris_tz = timezone("Europe/Paris")
+
+        # Définir les jobs à 02h et 14h heure française
+        self.scheduler.add_job(self.appliquer_frais_auto, CronTrigger(hour=2, minute=0, timezone=paris_tz))
+        self.scheduler.add_job(self.appliquer_frais_auto, CronTrigger(hour=14, minute=0, timezone=paris_tz))
+        self.scheduler.start()
+  #      print("📅 Scheduler des frais lancé.")
+    
     def init_db(self):
         conn = sqlite3.connect('prets.db')
         cursor = conn.cursor()
@@ -296,15 +307,15 @@ class Banque(commands.Cog):
         result = self.appliquer_frais()
         await interaction.response.send_message(f"**Résultat des frais appliqués :**\n{result}", ephemeral=True)
 
-    @tasks.loop(hours=12)
+
     async def appliquer_frais_auto(self):
         print("⏳ Application des frais de banque automatique...")
         result = self.appliquer_frais()
         print(result)
 
-    @appliquer_frais_auto.before_loop
-    async def before_frais(self):
-        await self.bot.wait_until_ready()
+  #  @appliquer_frais_auto.before_loop
+   # async def before_frais(self):
+    #    await self.bot.wait_until_ready()
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
