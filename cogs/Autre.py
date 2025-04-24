@@ -54,11 +54,9 @@ class AutreCog(commands.Cog):
 
 
 
-
-
-    @discord.app_commands.command(name="sim", description="Simule un vol avec probabilité d'échec et gain estimé")
-    async def sim_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
-
+    @discord.app_commands.command(name="sim", description="Simule un vol avec une probabilité d'échec et un gain estimé")
+    async def sim(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
+        await interaction.response.defer(ephemeral=True)
         if not discord.utils.get(interaction.user.roles, name="Conseil d'administration"):
             await interaction.response.send_message("❌ Cette commande est en phase de test pour une **amélioration** de */simuler_vol*.", ephemeral=True)
             return
@@ -67,69 +65,74 @@ class AutreCog(commands.Cog):
         initiator_id = self.extract_id_from_mention(initiator_mention)
 
         if not cible_id or not initiator_id:
-            await interaction.response.send_message("Erreur : mention invalide.")
+            await interaction.followup.send("Erreur : Veuillez utiliser une mention valide pour l'ID.")
             return
 
+        url_initiator = f"https://unbelievaboat.com/api/v1/guilds/1161602328714023013/users/{initiator_id}"
         headers = {
             "accept": "application/json",
-            "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiIxMzU4MDEwNTg0MDA3ODM4NDIzIiwiaWF0IjoxNzQzODQ1MzUzfQ.MVyA4OU4bgetYIB-T1aCajjJgEI2YTrcnV7owX38BlU"  # Remplace par ton token UnbelievaBoat
+            "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiIxMzU4MDEwNTg0MDA3ODM4NDIzIiwiaWF0IjoxNzQzODQ1MzUzfQ.MVyA4OU4bgetYIB-T1aCajjJgEI2YTrcnV7owX38BlU"
         }
 
-        url_base = "https://unbelievaboat.com/api/v1/guilds/1161602328714023013/users/"
-        response_initiator = requests.get(url_base + initiator_id, headers=headers)
-
+        response_initiator = requests.get(url_initiator, headers=headers)
         if response_initiator.status_code != 200:
-            await interaction.response.send_message("Erreur API pour l'initiateur.")
-            print(response_initiator)
+            await interaction.followup.send(f"Erreur API pour l'initiateur. Code: {response_initiator.status_code}")
             return
 
         data_initiator = response_initiator.json()
         ton_cash = data_initiator.get('cash', 0)
         ta_richesse = data_initiator.get('total', 0)
 
-        response_cible = requests.get(url_base + cible_id, headers=headers)
+        url_cible = f"https://unbelievaboat.com/api/v1/guilds/1161602328714023013/users/{cible_id}"
+        response_cible = requests.get(url_cible, headers=headers)
 
         if response_cible.status_code != 200:
-            await interaction.response.send_message("Erreur API pour la cible.")
+            await interaction.followup.send("Erreur : Impossible de récupérer les données de la cible.")
             return
 
         data_cible = response_cible.json()
-        cash_cible = data_cible['cash']
+        cash_cible = data_cible.get('cash', 0)
+
         X = cash_cible
         Y = ton_cash
-        Z = (Y / ta_richesse) * 100 if ta_richesse > 0 else 100
 
-        if Z < 20:
-            proba = 20
-            msg = "❌ Tu as **20%** de probabilité d'échec."
-        elif Z > 80:
+        if ta_richesse == 0 and X == 0:
             proba = 80
             msg = "❌ Tu as **80%** de probabilité d'échec."
+        elif ta_richesse == 0:
+            proba = 20
+            msg = "🎯 Tu as **20%** de probabilité d'échec."
         else:
-            proba = round(Z, 2)
-            msg = f"🎲 Tu as **{proba}%** de probabilité d'échec."
+            Z = (ta_richesse / (ta_richesse + X)) * 100
+            if Z < 20:
+                proba = 20
+                msg = "❌ Tu as **20%** de probabilité d'échec."
+            elif Z > 80:
+                proba = 80
+                msg = "❌ Tu as **80%** de probabilité d'échec."
+            else:
+                proba = round(Z, 2)
+                msg = f"🎲 Tu as **{proba}%** de probabilité d'échec."
 
         gain = round(((100 - proba) * X) / 100, 2)
         perte = round(0.20 * ta_richesse, 2)
 
         embed = discord.Embed(title="🔐 Simulation de Vol", color=0x3498db)
-        embed.add_field(name="", value=f"", inline=False)
         embed.add_field(name="🎯 Cible", value=cible_mention, inline=True)
         embed.add_field(name="💵 Cash de la Cible", value=f"{X:,}💰", inline=True)
-        embed.add_field(name="", value=f"", inline=False)
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
         embed.add_field(name="🧍 Ton cash", value=f"{Y:,}💰", inline=True)
         embed.add_field(name="📊 Ta richesse totale", value=f"{ta_richesse:,}💰", inline=True)
-        embed.add_field(name="", value=f"", inline=False)
+        embed.add_field(name="\u200b", value="\u200b", inline=False)
         embed.add_field(name="🎲 Probabilité d'échec", value=msg, inline=False)
-        embed.add_field(name="", value=f"", inline=False)
         embed.add_field(name="💰 Gain estimé", value=f"{gain:,}💰", inline=False)
-        embed.add_field(name="", value=f"", inline=False)
         embed.add_field(name="💸 Perte possible", value=f"{perte:,}💰", inline=False)
 
-        await interaction.response.send_message(embed=embed, ephemeral=True)
+        await interaction.followup.send(embed=embed, ephemeral=True)
 
     @discord.app_commands.command(name="simuler_vol", description="Simule un vol avec une probabilité d'échec et un gain estimé")
     async def simulateur_vol(self, interaction: discord.Interaction, cible_mention: str, initiator_mention: str):
+        await interaction.response.defer(ephemeral=True)
         user_id = interaction.user.id
         current_time = time.time()
 
@@ -147,7 +150,7 @@ class AutreCog(commands.Cog):
                 # Formater le message
                 cooldown_msg = f"⌛ Tu dois attendre encore {days}J {hours}H {minutes}M {seconds}S avant de réutiliser cette commande."
 
-                await interaction.response.send_message(cooldown_msg, ephemeral=True)
+                await interaction.followup.send(cooldown_msg, ephemeral=True)
                 return
 
         # Si la commande peut être exécutée, la mettre à jour dans le cooldown
@@ -158,7 +161,7 @@ class AutreCog(commands.Cog):
         initiator_id = self.extract_id_from_mention(initiator_mention)
 
         if not cible_id or not initiator_id:
-            await interaction.response.send_message("Erreur : Veuillez utiliser une mention valide pour l'ID.")
+            await interaction.followup.send("Erreur : Veuillez utiliser une mention valide pour l'ID.")
             return
 
         # Requête API pour obtenir les informations de l'initiateur avec son ID
@@ -191,7 +194,7 @@ class AutreCog(commands.Cog):
              #   return
         else:
             # Si la réponse de l'API ne contient pas un statut 200 (succès)
-            await interaction.response.send_message(f"Erreur API pour l'initiateur. Code de statut: {response_initiator.status_code}")
+            await interaction.followup.send(f"Erreur API pour l'initiateur. Code de statut: {response_initiator.status_code}")
             return
 
         # Requête API pour obtenir les informations de la cible avec l'ID
@@ -239,7 +242,7 @@ class AutreCog(commands.Cog):
             embed.add_field(name="", value=f"", inline=False)
             embed.add_field(name="💸 Perte possible", value=f"{perte:,}💰", inline=False)  # Perte de 20% de ton cash
 
-            await interaction.response.send_message(embed=embed, ephemeral=True)
+            await interaction.followup.send(embed=embed, ephemeral=True)
         else:
             # Si l'API ne répond pas correctement pour la cible
             await interaction.response.send_message("Erreur : Impossible de récupérer les données de la cible.")        
