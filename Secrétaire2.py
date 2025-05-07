@@ -31,7 +31,7 @@ class MonBot(commands.Bot):
     """Classe personnalisée pour le bot Discord."""
     async def setup_hook(self):
         extensions = [
-            'Autre', 'Election', 'Travailler', 'Banque'
+            'Autre', 'Election', 'Travailler', 'Banque', 'Entreprises'
         ]
 
         for extension in extensions:
