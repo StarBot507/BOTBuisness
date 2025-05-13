@@ -39,7 +39,7 @@ class MonBot(commands.Bot):
                 await self.load_extension(f'cogs.{extension}')
                 print(f"Extension {extension} chargée avec succès.")
                 # Introduire une pause entre chaque chargement pour différer
-                await asyncio.sleep(1)  # Délai de 3 secondes
+                await asyncio.sleep(5)  # Délai de 3 secondes
             except Exception as e:
                 print(f"Erreur en chargeant {extension}: {e}")
 
