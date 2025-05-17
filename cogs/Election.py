@@ -183,7 +183,7 @@ class Election(commands.Cog):
     @app_commands.command(name="election", description="Lance une élection avec durée en secondes.")
     @app_commands.describe(duree="Durée du vote en secondes")
     async def start_election(self, interaction: discord.Interaction, duree: int):
-        if not interaction.user.guild_permissions.administrator:
+        if not interaction.user.guild_permissions.manage_guild:
             await interaction.response.send_message("Tu dois être administrateur pour lancer une élection.", ephemeral=True)
             return
 
@@ -211,7 +211,7 @@ class Election(commands.Cog):
 
     @app_commands.command(name="reset", description="Réinitialise les candidats et les votes")
     async def reset(self, interaction: discord.Interaction):
-        if not interaction.user.guild_permissions.administrator:
+        if not interaction.user.guild_permissions.manage_guild:
             await interaction.response.send_message("❌ Tu dois être administrateur pour utiliser cette commande.", ephemeral=True)
             return
 
